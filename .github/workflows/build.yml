@@ -2,26 +2,26 @@ name: Build APK
 
 on:
   push:
-      branches: [ main ]
-        workflow_dispatch:
+    branches: [ main ]
+  workflow_dispatch:
 
-        jobs:
-          build:
-              runs-on: ubuntu-latest
-                  steps:
-                      - uses: actions/checkout@v4
-                          
-                              - name: Install dependencies
-                                    run: |
-                                            sudo apt update
-                                                    sudo apt install -y python3-pip openjdk-17-jdk git zip unzip
-                                                            pip3 install buildozer cython
-                                                                
-                                                                    - name: Build APK
-                                                                          run: buildozer android debug
-                                                                              
-                                                                                  - name: Upload APK
-                                                                                        uses: actions/upload-artifact@v4
-                                                                                              with:
-                                                                                                      name: kyza-tapcat
-                                                                                                              path: bin/*.apk
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y python3-pip openjdk-17-jdk git zip unzip
+        pip3 install buildozer cython
+    
+    - name: Build APK
+      run: buildozer android debug
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: kyza-tapcat
+        path: bin/*.apk
